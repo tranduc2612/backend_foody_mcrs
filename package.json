@@ -1,0 +1,22 @@
+{
+  "name": "backend_mcrs_foody",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "npm@9.8.1",
+  "workspaces": [
+    "gateway",
+    "user-service",
+    "product-service",
+    "auth"
+  ],
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.7",
+    "turbo": "^2.1.1"
+  },
+  "scripts": {
+    "dev": "turbo run start:dev"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2"
+  }
+}

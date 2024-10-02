@@ -1,0 +1,11 @@
+# compiled output
+node_modules
+dist
+build
+bin
+obj
+tsconfig.tsbuildinfo
+storybook-static
+.docusaurus
+.vercel
+.turbo/

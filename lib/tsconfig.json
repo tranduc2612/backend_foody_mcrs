@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",           // Thư mục để xuất các file đã biên dịch
+    "rootDir": "./src",           // Thư mục chứa mã nguồn TypeScript
+    "module": "commonjs",         // Module system cho Node.js
+    "target": "es6",              // Phiên bản ECMAScript target
+    "declaration": true,          // Xuất file .d.ts (definition file)
+    "strict": true,               // Bật các tùy chọn strict mode
+    "sourceMap": false,           // Không tạo file source map nếu không cần
+    "noEmit": false,              // Cho phép xuất file sau khi biên dịch
+    "removeComments": true,       // Tùy chọn này xóa bỏ các comment trong mã đã biên dịch
+    "esModuleInterop": true,       // Hỗ trợ import/export ES6 với CommonJS
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+  },
+  "include": ["src/**/*"],        // Bao gồm tất cả file trong thư mục src
+  "exclude": ["node_modules", "dist"] // Loại trừ thư mục không cần thiết
+}

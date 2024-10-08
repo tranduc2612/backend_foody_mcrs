@@ -23,6 +23,7 @@ export class AuthController {
   )
   register(@Body() payload: CreateUserDto) {
     const { username, password } = payload;
+    
     if (username && password) {
       return this.authService.registration(payload);
     }

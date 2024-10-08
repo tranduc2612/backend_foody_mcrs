@@ -3,20 +3,32 @@ import { v4 as uuidv4 } from "uuid";
 @Entity({ name: "users" })
 export class Users {
   @PrimaryColumn()
-  id: string = uuidv4();
+  id: String = uuidv4();
 
   @Column()
-  username!: string;
+  username!: String;
 
   @Column()
-  password!: string;
+  password!: String;
 
   @Column()
-  email!: string;
+  email!: String;
+
+  @Column({ default: 'USER' })
+  role!: String;
+
+  @Column({ type: "timestamp", nullable: true })
+  DOB!: Date;
 
   @Column({ type: "text", nullable: true })
-  refreshToken?: string;
+  avatar?: String;
 
   @Column({ type: "text", nullable: true })
-  accessToken?: string;
+  refreshToken?: String;
+
+  @Column({ type: "text", nullable: true })
+  accessToken?: String;
+
+  @Column({ type: "timestamp", nullable: true })
+  createdAt!: Date;
 }

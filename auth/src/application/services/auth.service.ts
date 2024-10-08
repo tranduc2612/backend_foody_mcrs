@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
-import { AuthUserDto, CreateUserDto, ErrorType, RegisterDTO, Users } from 'lib';
+import { AuthUserDto, convertStringToDate, CreateUserDto, ErrorType, RegisterDTO, ROLE, Users } from 'lib';
 import { RpcBadRequestException, RpcUnAuthorizeException } from 'src/exceptions/custom-rpc-exceptions';
 import { Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
@@ -28,7 +28,7 @@ export class AuthService {
     throw new RpcBadRequestException('The username is not exist !');
   }
 
-  async registration({ username, password, email }: CreateUserDto) {
+  async registration({ username, password, email, DOB, role }: CreateUserDto) {
     const dataUser = await this.userRepository.findOne({
       where: {
         username,
@@ -48,6 +48,8 @@ export class AuthService {
       username,
       password: hashedPassword,
       email,
+      DOB: convertStringToDate(DOB),
+      role: role || ROLE.USER
     });
 
     const user = await this.userRepository.save(newUser);

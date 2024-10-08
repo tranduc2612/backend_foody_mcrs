@@ -10,7 +10,7 @@ export const TypeOrmConFig: TypeOrmModuleAsyncOptions = {
     port: +configService.get('DB_PORT') || 3306,
     username: configService.get('DB_USERNAME') || 'root',
     password: configService.get('DB_PASSWORD') || '123456',
-    database: configService.get('DB_DATABASE') || 'my_database',
+    database: configService.get('DB_DATABASE') || 'foody_db',
     entities: [Users],
     synchronize: true,
   }),

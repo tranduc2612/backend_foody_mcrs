@@ -21,7 +21,6 @@ export class UserService {
 
     if(data){
       const dataMapper: UserDTO = {
-        id: data.id,
         username: data.username,
         email: data.email,
       }
@@ -37,7 +36,6 @@ export class UserService {
 
   async create(dto: CreateUserDto): Promise<UserDTO> {
     const newUser = await this.userRepository.create({
-      id: uuidv4(),
       ...dto,
     });
 
@@ -45,7 +43,6 @@ export class UserService {
 
     if(data){
       const dataMapper: UserDTO = {
-        id: data.id,
         username: data.username,
         email: data.email
       }

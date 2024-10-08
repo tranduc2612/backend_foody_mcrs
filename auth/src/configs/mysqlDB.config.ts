@@ -1,6 +1,6 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
-import { Users } from 'lib';
+import { Recipes, Users, Comment, Step } from 'lib';
 
 export const TypeOrmConFig: TypeOrmModuleAsyncOptions = {
   imports: [ConfigModule],
@@ -11,7 +11,7 @@ export const TypeOrmConFig: TypeOrmModuleAsyncOptions = {
     username: configService.get('DB_USERNAME') || 'root',
     password: configService.get('DB_PASSWORD') || '123456',
     database: configService.get('DB_DATABASE') || 'foody_db',
-    entities: [Users],
+    entities: [Users,Recipes,Comment,Step],
     synchronize: true,
   }),
   inject: [ConfigService],

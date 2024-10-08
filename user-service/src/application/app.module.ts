@@ -4,7 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConFig } from 'configs/mysqlDB.config';
 import { UserController } from './controllers/user.controller';
 import { UserService } from './services/user.service';
-import { Users } from 'lib';
+import { Recipes, Users } from 'lib';
 
 @Module({
   imports: [
@@ -12,7 +12,7 @@ import { Users } from 'lib';
       envFilePath: '.env',
     }),
     TypeOrmModule.forRootAsync(TypeOrmConFig),
-    TypeOrmModule.forFeature([Users]),
+    TypeOrmModule.forFeature([Users,Recipes]),
   ],
   controllers: [UserController],
   providers: [UserService],

@@ -10,7 +10,6 @@ async function bootstrap() {
     options: {
       host: env.APP.AUTH_SERVICE.HOST,
       port: env.APP.AUTH_SERVICE.PORT,
-      
     },
   });
   await app.startAllMicroservices();

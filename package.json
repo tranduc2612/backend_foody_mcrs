@@ -6,7 +6,6 @@
   "workspaces": [
     "gateway",
     "user-service",
-    "product-service",
     "auth"
   ],
   "devDependencies": {

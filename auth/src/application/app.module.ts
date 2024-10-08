@@ -8,7 +8,7 @@ import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from 'src/utils/local.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { env } from 'src/configs/env.config';
-import { Users } from 'lib';
+import { Recipes, Users } from 'lib';
 
 @Module({
   imports: [

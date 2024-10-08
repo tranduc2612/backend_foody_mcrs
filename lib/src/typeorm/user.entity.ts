@@ -1,34 +1,40 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, PrimaryColumn } from "typeorm";
 import { v4 as uuidv4 } from "uuid";
+import { Recipes } from "./recipes.entity";
+import { Comment } from "./comment.entity";
 @Entity({ name: "users" })
 export class Users {
   @PrimaryColumn()
-  id: String = uuidv4();
+  username!: string;
 
   @Column()
-  username!: String;
+  password!: string;
 
   @Column()
-  password!: String;
+  email!: string;
 
-  @Column()
-  email!: String;
-
-  @Column({ default: 'USER' })
-  role!: String;
+  @Column({ default: "USER" })
+  role!: string;
 
   @Column({ type: "timestamp", nullable: true })
   DOB!: Date;
 
   @Column({ type: "text", nullable: true })
-  avatar?: String;
+  avatar?: string;
 
   @Column({ type: "text", nullable: true })
-  refreshToken?: String;
+  refreshToken?: string;
 
   @Column({ type: "text", nullable: true })
-  accessToken?: String;
+  accessToken?: string;
 
   @Column({ type: "timestamp", nullable: true })
   createdAt!: Date;
+
+  @OneToMany(() => Recipes, (rec) => rec.createdBy)
+  recipes!: Recipes[];
+
+  @OneToMany(() => Comment, (rec) => rec.idUser)
+  @JoinColumn({ name: "commentIds" })
+  commentIds!: Comment[];
 }

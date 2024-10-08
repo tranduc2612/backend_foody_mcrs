@@ -44,7 +44,6 @@ export class AuthService {
 
     const hashedPassword = await this.hashPassword(password);
     const newUser = await this.userRepository.create({
-      id: uuidv4(),
       username,
       password: hashedPassword,
       email,

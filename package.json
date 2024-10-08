@@ -6,14 +6,16 @@
   "workspaces": [
     "gateway",
     "user-service",
-    "auth"
+    "auth",
+    "recipes-service"
   ],
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.7",
     "turbo": "^2.1.1"
   },
   "scripts": {
-    "dev": "turbo run start:dev"
+    "dev": "turbo run start:dev",
+    "lib": "cd lib && npm install && npm run build"
   },
   "dependencies": {
     "jsonwebtoken": "^9.0.2"

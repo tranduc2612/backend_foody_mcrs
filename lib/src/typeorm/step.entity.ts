@@ -16,6 +16,6 @@ export class Step {
     stepCount!: number;
   
     @ManyToOne(() => Recipes, (rec) => rec.idSteps)
-    @JoinColumn({ name: "idRecipe" })
+    @JoinColumn({ name: "idRecipe", foreignKeyConstraintName: 'FK_Step_Recipes' })
     idRecipe!: Recipes;
 }

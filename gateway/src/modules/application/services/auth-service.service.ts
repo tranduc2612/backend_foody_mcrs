@@ -25,4 +25,8 @@ export class AuthService {
 		...payload
 	})
   }
+
+  async demoService() {
+    return transformRequest<any>(this.client,'demo')
+  }
 }

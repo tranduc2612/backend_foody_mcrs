@@ -37,4 +37,12 @@ export class AuthController {
     const {refreshToken} = token;
     return this.authService.refreshToken(refreshToken);
   }
+
+  @MessagePattern(
+    { cmd: 'demo' },
+    Transport.TCP,
+  )
+  runDemo() {
+    return this.authService.demoData();
+  }
 }

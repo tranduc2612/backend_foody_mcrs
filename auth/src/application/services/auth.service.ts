@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
-import { AuthUserDto, convertStringToDate, CreateUserDto, ErrorType, RegisterDTO, ROLE, Users } from 'lib';
+import { AuthUserDto, convertStringToDate, CreateUserDto, ErrorType, Recipes, RegisterDTO, ROLE, Users } from 'lib';
 import { RpcBadRequestException, RpcUnAuthorizeException } from 'src/exceptions/custom-rpc-exceptions';
 import { Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
@@ -12,6 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
 export class AuthService {
   constructor(
     @InjectRepository(Users) private readonly userRepository: Repository<Users>,
+    @InjectRepository(Users) private readonly recipesRepository: Repository<Recipes>,
     private readonly jwtService: JwtService,
   ) {}
   async authentication({ username, password }: AuthUserDto) {
@@ -130,5 +131,12 @@ export class AuthService {
   async hashPassword(password: string): Promise<string> {
     const salt = await bcrypt.genSalt();
     return bcrypt.hash(password, salt);
+  }
+
+  async demoData(){
+    return await this.userRepository
+            .createQueryBuilder("user")
+            .leftJoinAndSelect("user.recipes", "recipe")
+            .getOne();
   }
 }

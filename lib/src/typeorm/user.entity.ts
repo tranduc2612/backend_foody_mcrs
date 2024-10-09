@@ -1,7 +1,8 @@
 import { Column, Entity, JoinColumn, OneToMany, PrimaryColumn } from "typeorm";
-import { v4 as uuidv4 } from "uuid";
+import { CartDetail } from "./cart_detail.entity";
+import { CommentRecipes } from "./comment.entity";
 import { Recipes } from "./recipes.entity";
-import { Comment } from "./comment.entity";
+import { Order } from "./order.entity";
 @Entity({ name: "users" })
 export class Users {
   @PrimaryColumn()
@@ -32,9 +33,18 @@ export class Users {
   createdAt!: Date;
 
   @OneToMany(() => Recipes, (rec) => rec.createdBy)
+  @JoinColumn({foreignKeyConstraintName: 'FK_User_Recipes'})
   recipes!: Recipes[];
 
-  @OneToMany(() => Comment, (rec) => rec.idUser)
-  @JoinColumn({ name: "commentIds" })
-  commentIds!: Comment[];
+  @OneToMany(() => CommentRecipes, (rec) => rec.idUser)
+  @JoinColumn({ name: "commentIds",foreignKeyConstraintName: 'FK_User_CommentRecipes' })
+  commentIds!: CommentRecipes[];
+
+  @OneToMany(() => Order, (rec) => rec.idUser)
+  @JoinColumn({ name: "orderIds",foreignKeyConstraintName: 'FK_User_Order' })
+  orderIds!: Order[];
+
+  @OneToMany(() => CartDetail, (rec) => rec.idUser)
+  @JoinColumn({ name: "cart",foreignKeyConstraintName: 'FK_User_CartDetail' })
+  cart!: CartDetail[];
 }

@@ -44,7 +44,7 @@ export class UserService {
     });
 
     // Chuyển đổi kết quả sang DTO (nếu cần)
-    return users.map(user => this.toUserDTO(user));
+    return users.map(user => this.toUserDTO(user))
   }
 
   // Chuyển User entity thành UserDTO

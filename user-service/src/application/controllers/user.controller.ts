@@ -16,7 +16,7 @@ export class UserController {
   }
 
   @MessagePattern({cmd: TCP_MESSAGES.USER_SERVICE.GET_LIST_USER_BY_LIST_ID}, Transport.TCP)
-   getUserByListIds(@Body() payload) {
-    return this.userService.get(payload.username); 
+    getUserByListIds(@Body() payload) {
+    return this.userService.getUsersByListId(payload); 
   }
 }

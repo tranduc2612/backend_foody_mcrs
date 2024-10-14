@@ -23,7 +23,7 @@ export class RecipesService {
     const userIds = recipes.map((recipe) => recipe.createdBy);
 
     // Bước 3: Gọi User Service để lấy thông tin user tương ứng
-    const users = await transformRequest<UserDTO[]>(this.clientUser,TCP_MESSAGES.USER_SERVICE.GET_LIST_USER_BY_LIST_ID,{ userIds });
+    const users = await transformRequest<UserDTO[]>(this.clientUser,TCP_MESSAGES.USER_SERVICE.GET_LIST_USER_BY_LIST_ID, userIds);
 
     // Bước 4: Hợp nhất thông tin sản phẩm với thông tin người dùng
     const productsWithUsers = recipes.map((recipe: Recipes) => {

@@ -18,5 +18,9 @@ export const env = {
       PORT: +process.env.AUTH_SERVICE_PORT || 3001,
       HOST: process.env.AUTH_SERVICE_HOST || '127.0.0.1',
     },
+    RECIPES_SERVICE: {
+      PORT: +process.env.RECIPES_SERVICE_PORT || 3001,
+      HOST: process.env.RECIPES_SERVICE_HOST || '127.0.0.1',
+    },
   },
 };

@@ -32,19 +32,19 @@ export class Users {
   @Column({ type: "timestamp", nullable: true })
   createdAt!: Date;
 
-  @OneToMany(() => Recipes, (rec) => rec.createdBy)
-  @JoinColumn({foreignKeyConstraintName: 'FK_User_Recipes'})
-  recipes!: Recipes[];
+  // @OneToMany(() => Recipes, (rec) => rec.createdBy)
+  // @JoinColumn({foreignKeyConstraintName: 'FK_User_Recipes'})
+  // recipes!: Recipes[];
 
-  @OneToMany(() => CommentRecipes, (rec) => rec.idUser)
-  @JoinColumn({ name: "commentIds",foreignKeyConstraintName: 'FK_User_CommentRecipes' })
-  commentIds!: CommentRecipes[];
+  // @OneToMany(() => CommentRecipes, (rec) => rec.idUser)
+  // @JoinColumn({ name: "commentIds",foreignKeyConstraintName: 'FK_User_CommentRecipes' })
+  // commentIds!: CommentRecipes[];
 
-  @OneToMany(() => Order, (rec) => rec.idUser)
-  @JoinColumn({ name: "orderIds",foreignKeyConstraintName: 'FK_User_Order' })
-  orderIds!: Order[];
+  // @OneToMany(() => Order, (rec) => rec.idUser)
+  // @JoinColumn({ name: "orderIds",foreignKeyConstraintName: 'FK_User_Order' })
+  // orderIds!: Order[];
 
-  @OneToMany(() => CartDetail, (rec) => rec.idUser)
-  @JoinColumn({ name: "cart",foreignKeyConstraintName: 'FK_User_CartDetail' })
-  cart!: CartDetail[];
+  // @OneToMany(() => CartDetail, (rec) => rec.idUser)
+  // @JoinColumn({ name: "cart",foreignKeyConstraintName: 'FK_User_CartDetail' })
+  // cart!: CartDetail[];
 }

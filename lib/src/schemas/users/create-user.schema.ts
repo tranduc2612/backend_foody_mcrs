@@ -1,6 +1,6 @@
 import { IsDate, IsEmail, IsIn, IsString, MinLength } from 'class-validator';
 
-export class CreateUserDto{
+export class CreateUser{
   @IsString()
   @MinLength(3, { message: 'Tên phải có ít nhất 3 ký tự' })
   username!: string;

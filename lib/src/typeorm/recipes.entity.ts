@@ -39,9 +39,11 @@ export class Recipes {
   @Column({ type: "timestamp", nullable: true })
   createdAt!: Date;
 
-  @ManyToOne(() => Users, (users) => users.recipes)
-  @JoinColumn({ name: "createdBy", foreignKeyConstraintName: 'FK_Recipes_Users' })
-  createdBy!: Users;
+  // @ManyToOne(() => Users, (users) => users.recipes)
+  // @JoinColumn({ name: "createdBy", foreignKeyConstraintName: 'FK_Recipes_Users' })
+  // createdBy!: Users;
+  @Column()
+  createdBy!: string;
 
   @OneToMany(() => Step, (step) => step.id)
   @JoinColumn({ name: "idSteps", foreignKeyConstraintName: 'FK_Recipes_Step' })

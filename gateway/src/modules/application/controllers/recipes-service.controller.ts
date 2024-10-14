@@ -1,17 +1,18 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
+  Put,
   UseGuards,
-  UseInterceptors,
+  UseInterceptors
 } from '@nestjs/common';
+import { CreateRecipe, GetListRecipes, UpdateRecipe } from 'lib';
 import { TransformInterceptor } from 'src/interceptors/transform.interceptor';
-import { AuthGuard } from 'src/modules/auth/auth.guard';
-import { UserService } from '../services/user-service.service';
 import { RecipesService } from '../services/recipes-serice.service';
-import { CreateRecipe, GetListRecipes } from 'lib';
+import { AuthGuard } from 'src/modules/auth/auth.guard';
 
 // @UseGuards(AuthGuard)
 // @Controller('applications/cascade')
@@ -22,14 +23,26 @@ export class RecipesController {
   constructor(private readonly recipesService: RecipesService) {}
 
   @Get('list')
-  // @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   getListRecipes(@Body() req: GetListRecipes) {
     return this.recipesService.getList(req);
   }
 
   @Post('create')
-  // @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   createRecipes(@Body() req: CreateRecipe) {
     return this.recipesService.createRecipe(req);
+  }
+
+  @Put('update')
+  @UseGuards(AuthGuard)
+  updateRecipes(@Body() req: UpdateRecipe) {
+    return this.recipesService.updateRecipe(req);
+  }
+
+  @Delete('delete/:id')
+  @UseGuards(AuthGuard)
+  deleteRecipes(@Param() { id }) {
+    return this.recipesService.deleteRecipe(id);
   }
 }

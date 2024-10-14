@@ -12,5 +12,6 @@ export interface RecipesDTO {
   timeCook: number;
   createdAt: Date;
   createdBy: string;
-  users: UserDTO
+  isDelete: boolean;
+  users?: UserDTO
 }

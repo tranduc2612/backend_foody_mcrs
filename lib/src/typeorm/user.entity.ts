@@ -1,8 +1,4 @@
-import { Column, Entity, JoinColumn, OneToMany, PrimaryColumn } from "typeorm";
-import { CartDetail } from "./cart_detail.entity";
-import { CommentRecipes } from "./comment.entity";
-import { Recipes } from "./recipes.entity";
-import { Order } from "./order.entity";
+import { Column, Entity, PrimaryColumn } from "typeorm";
 @Entity({ name: "users" })
 export class Users {
   @PrimaryColumn()
@@ -30,7 +26,7 @@ export class Users {
   accessToken?: string;
 
   @Column({ type: "timestamp", nullable: true })
-  createdAt!: Date;
+  createdAt: Date = new Date();
 
   // @OneToMany(() => Recipes, (rec) => rec.createdBy)
   // @JoinColumn({foreignKeyConstraintName: 'FK_User_Recipes'})

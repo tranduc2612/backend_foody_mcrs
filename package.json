@@ -16,7 +16,10 @@
   "scripts": {
     "dev": "npm run build-lib && turbo run start:dev",
     "lib": "cd lib && npm install && npm run build",
+    "gateway-dev": "cd gateway && npm run start:dev",
     "auth-dev": "cd auth && npm run start:dev",
+    "user-dev": "cd user-service && npm run start:dev",
+    "recipes-dev": "cd recipes-service && npm run start:dev",
     "build-lib": "cd lib && npm run build"
   },
   "dependencies": {

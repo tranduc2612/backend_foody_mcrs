@@ -81,7 +81,7 @@ export class AuthService {
       refreshToken: newRefreshToken,
     };
 
-    this.userRepository.update(data.id, {
+    this.userRepository.update(data.username, {
       ...token,
     });
 

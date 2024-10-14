@@ -5,7 +5,8 @@ import {
   GetListRecipes,
   RecipesDTO,
   TCP_MESSAGES,
-  TCP_SERVICES_KEYS
+  TCP_SERVICES_KEYS,
+  UpdateRecipe
 } from 'lib';
 import { transformRequest } from 'src/utils/request.helper';
 
@@ -31,6 +32,26 @@ export class RecipesService {
       TCP_MESSAGES.RECIPES_SERVICE.CREATE_RECIPES,
       {
         ...payload,
+      },
+    );
+  }
+
+  async updateRecipe(payload: UpdateRecipe) {
+    return transformRequest<RecipesDTO>(
+      this.client,
+      TCP_MESSAGES.RECIPES_SERVICE.UPDATE_RECIPES,
+      {
+        ...payload,
+      },
+    );
+  }
+
+  async deleteRecipe(id: string) {
+    return transformRequest<RecipesDTO>(
+      this.client,
+      TCP_MESSAGES.RECIPES_SERVICE.DELETE_RECIPES,
+      {
+        id,
       },
     );
   }

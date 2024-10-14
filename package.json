@@ -14,7 +14,9 @@
     "turbo": "^2.1.1"
   },
   "scripts": {
-    "dev": "turbo run start:dev",
+    "auth-dev": "cd auth && npm run start:dev",
+    "dev": "npm run build lib && turbo run start:dev",
+    "build-lib": "cd lib && npm run build",
     "lib": "cd lib && npm install && npm run build"
   },
   "dependencies": {

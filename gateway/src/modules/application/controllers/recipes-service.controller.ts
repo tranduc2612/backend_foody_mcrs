@@ -2,16 +2,12 @@ import {
   Body,
   Controller,
   Get,
-  Param,
   Post,
-  UseGuards,
-  UseInterceptors,
+  UseInterceptors
 } from '@nestjs/common';
-import { TransformInterceptor } from 'src/interceptors/transform.interceptor';
-import { AuthGuard } from 'src/modules/auth/auth.guard';
-import { UserService } from '../services/user-service.service';
-import { RecipesService } from '../services/recipes-serice.service';
 import { CreateRecipe, GetListRecipes } from 'lib';
+import { TransformInterceptor } from 'src/interceptors/transform.interceptor';
+import { RecipesService } from '../services/recipes-serice.service';
 
 // @UseGuards(AuthGuard)
 // @Controller('applications/cascade')

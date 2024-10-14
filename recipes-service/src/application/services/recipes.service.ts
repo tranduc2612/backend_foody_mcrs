@@ -7,7 +7,7 @@ import { Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
-export class UserService {
+export class RecipesService {
   constructor(
     @InjectRepository(Users) private readonly userRepository: Repository<Users>,
   ) {}
@@ -21,6 +21,7 @@ export class UserService {
 
     if(data){
       const dataMapper: UserDTO = {
+        id: data.id,
         username: data.username,
         email: data.email,
       }
@@ -31,28 +32,6 @@ export class UserService {
     }
 
     throw new RpcBadRequestException('The username is not exist !');
-    
-  }
-
-  async create(dto: CreateUserDto): Promise<UserDTO> {
-    const newUser = await this.userRepository.create({
-      ...dto,
-    });
-
-    const data = await this.userRepository.save(newUser);
-
-    if(data){
-      const dataMapper: UserDTO = {
-        username: data.username,
-        email: data.email
-      }
-
-      return {
-        ...dataMapper
-      };
-     
-    }
-    return null
     
   }
 }

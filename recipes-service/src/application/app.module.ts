@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConFig } from 'configs/mysqlDB.config';
-import { UserController } from './controllers/user.controller';
-import { UserService } from './services/user.service';
-import { Recipes, Users } from 'lib';
+import { RecipesController } from './controllers/recipes.controller';
+import { RecipesService } from './services/recipes.service';
+import { Users } from 'lib';
 
 @Module({
   imports: [
@@ -12,9 +12,9 @@ import { Recipes, Users } from 'lib';
       envFilePath: '.env',
     }),
     TypeOrmModule.forRootAsync(TypeOrmConFig),
-    TypeOrmModule.forFeature([Users,Recipes]),
+    TypeOrmModule.forFeature([Users]),
   ],
-  controllers: [UserController],
-  providers: [UserService],
+  controllers: [RecipesController],
+  providers: [RecipesService],
 })
 export class AppModule {}

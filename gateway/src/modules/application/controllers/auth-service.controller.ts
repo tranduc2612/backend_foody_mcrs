@@ -28,6 +28,11 @@ refreshToken(@Query("refreshToken") refreshToken: string) {
 	});
 }
 
+@Get("demo")
+demo() {
+	return this.authService.demoService();
+}
+
 //   @Post()
 //   @UsePipes(new ValidationPipe({transform: true, disableErrorMessages: false}))
 // 	async save(

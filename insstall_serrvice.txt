@@ -1,0 +1,3 @@
+npm i --save @nestjs/typeorm typeorm mysql2 @nestjs/config @nestjs/microservices
+npm i ../lib env
+ 

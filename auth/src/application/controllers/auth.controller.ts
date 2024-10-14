@@ -23,6 +23,7 @@ export class AuthController {
   )
   register(@Body() payload: CreateUserDto) {
     const { username, password } = payload;
+    
     if (username && password) {
       return this.authService.registration(payload);
     }
@@ -35,5 +36,13 @@ export class AuthController {
   refreshToken(@Body() token: { refreshToken: string }) {
     const {refreshToken} = token;
     return this.authService.refreshToken(refreshToken);
+  }
+
+  @MessagePattern(
+    { cmd: 'demo' },
+    Transport.TCP,
+  )
+  runDemo() {
+    return this.authService.demoData();
   }
 }

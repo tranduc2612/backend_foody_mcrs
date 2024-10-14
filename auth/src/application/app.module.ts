@@ -8,7 +8,18 @@ import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from 'src/utils/local.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { env } from 'src/configs/env.config';
-import { Users } from 'lib';
+import {
+  Recipes,
+  Users,
+  Step,
+  Country,
+  DetailRecipes,
+  Merchandise,
+  RecipesType,
+  Season,
+  CommentRecipes,
+} from 'lib';
+import { CartDetail } from 'lib/dist/typeorm/cart_detail.entity';
 
 @Module({
   imports: [
@@ -16,12 +27,22 @@ import { Users } from 'lib';
       envFilePath: '.env',
     }),
     TypeOrmModule.forRootAsync(TypeOrmConFig),
-    TypeOrmModule.forFeature([Users]),
+    TypeOrmModule.forFeature([
+      Users,
+      CommentRecipes,
+      Step,
+      Country,
+      DetailRecipes,
+      Merchandise,
+      RecipesType,
+      Season,
+      CartDetail
+    ]),
     JwtModule.register({
-      secret: env.APP.SECRET_KEY_ACCESS_TOKEN,  // Nên lưu trong biến môi trường
+      secret: env.APP.SECRET_KEY_ACCESS_TOKEN,
       signOptions: { expiresIn: '1h' },
     }),
-    PassportModule
+    PassportModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, LocalStrategy],

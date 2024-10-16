@@ -2,8 +2,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RpcBadRequestException } from 'exceptions/custom-rpc-exceptions';
-import { CreateUserDto, UserDTO, Users } from 'lib';
-import { Repository } from 'typeorm';
+import { CreateUser, UserDTO, Users } from 'lib';
+import { In, Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
@@ -34,25 +34,24 @@ export class UserService {
     
   }
 
-  async create(dto: CreateUserDto): Promise<UserDTO> {
-    const newUser = await this.userRepository.create({
-      ...dto,
+  // Lấy danh sách User dựa trên mảng username
+  async getUsersByListId(usernames: string[]): Promise<UserDTO[]> {
+    // Tìm các user có username nằm trong danh sách username[]
+    const users = await this.userRepository.find({
+      where: {
+        username: In(usernames), // Sử dụng mệnh đề In của TypeORM để tìm trong danh sách username
+      },
     });
 
-    const data = await this.userRepository.save(newUser);
+    // Chuyển đổi kết quả sang DTO (nếu cần)
+    return users.map(user => this.toUserDTO(user))
+  }
 
-    if(data){
-      const dataMapper: UserDTO = {
-        username: data.username,
-        email: data.email
-      }
-
-      return {
-        ...dataMapper
-      };
-     
-    }
-    return null
-    
+  // Chuyển User entity thành UserDTO
+  private toUserDTO(user: Users): UserDTO {
+    return {
+      username: user.username,
+      email: user.email
+    };
   }
 }

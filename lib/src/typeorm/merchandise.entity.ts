@@ -24,11 +24,11 @@ export class Merchandise {
     @JoinColumn({ name: "idDetailRecipes", foreignKeyConstraintName: 'FK_Merchandise_DetailRecipes' })
     idDetailRecipes!: DetailRecipes[];
 
-    @OneToMany(() => CartDetail, (rec) => rec.idMerchandise)
-    @JoinColumn({ name: "cart",foreignKeyConstraintName: 'FK_Merchandise_CartDetail' })
-    cart!: CartDetail[];
+    // @OneToMany(() => CartDetail, (rec) => rec.idMerchandise)
+    // @JoinColumn({ name: "cart",foreignKeyConstraintName: 'FK_Merchandise_CartDetail' })
+    // cart!: CartDetail[];
 
-    @OneToMany(() => OrderDetail, (rec) => rec.orderId)
-    @JoinColumn({ name: "detailOrder",foreignKeyConstraintName: 'FK_Merchandise_CartDetail' })
-    detailOrder!: OrderDetail[];
+    // @OneToMany(() => OrderDetail, (rec) => rec.orderId)
+    // @JoinColumn({ name: "detailOrder",foreignKeyConstraintName: 'FK_Merchandise_CartDetail' })
+    // detailOrder!: OrderDetail[];
 }

@@ -13,8 +13,9 @@ export class CommentRecipes {
     @Column({ type: "timestamp", nullable: true })
     createdAt!: Date;
   
-    @ManyToOne(() => Users, (rec) => rec.username)
-    @JoinColumn({ name: "idUser", foreignKeyConstraintName: 'FK_CommentRecipes_Users' })
+    // @ManyToOne(() => Users, (rec) => rec.username)
+    // @JoinColumn({ name: "idUser", foreignKeyConstraintName: 'FK_CommentRecipes_Users' })
+    @Column({ type: "text" })
     idUser!: Users;
 
     @ManyToOne(() => Recipes, (rec) => rec.id)

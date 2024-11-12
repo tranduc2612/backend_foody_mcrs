@@ -14,10 +14,10 @@ export class AuthUser{
   @IsString()
   @IsNotEmpty({message: 'không được để trống !'})
   @MinLength(3, {
-    message: "Tên tài khoản quá ngắn"
+    message: "Tên mật khẩu quá ngắn"
   })
   @MaxLength(20, {
-      message: "Tên tài khoản quá dài"
+      message: "Tên mật khẩu quá dài"
   })
   password!: string;
 }

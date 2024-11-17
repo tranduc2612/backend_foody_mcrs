@@ -1,21 +1,30 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
-import { AuthUserDto, convertStringToDate, CreateUserDto, ErrorType, Recipes, RegisterDTO, ROLE, Users } from 'lib';
-import { RpcBadRequestException, RpcUnAuthorizeException } from 'src/exceptions/custom-rpc-exceptions';
+import {
+  AuthUser,
+  convertStringToDate,
+  CreateUser,
+  ErrorType,
+  ROLE,
+  UserDTO,
+  Users,
+} from 'lib';
+import {
+  RpcBadRequestException,
+  RpcUnAuthorizeException,
+} from 'src/exceptions/custom-rpc-exceptions';
 import { Repository } from 'typeorm';
-import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(Users) private readonly userRepository: Repository<Users>,
-    @InjectRepository(Users) private readonly recipesRepository: Repository<Recipes>,
     private readonly jwtService: JwtService,
   ) {}
-  async authentication({ username, password }: AuthUserDto) {
+  async authentication({ username, password }: AuthUser): Promise<UserDTO> {
     const dataUser = await this.validateUser(username, password);
 
     if (dataUser) {
@@ -25,11 +34,14 @@ export class AuthService {
         ...token,
       };
     }
-
-    throw new RpcBadRequestException('The username is not exist !');
+    const error: ErrorType = {
+      field: 'username',
+      errors: ['The username is not exist !'],
+    };
+    throw new RpcBadRequestException('', [error]);
   }
 
-  async registration({ username, password, email, DOB, role }: CreateUserDto) {
+  async registration({ username, password, email, DOB, role }: CreateUser): Promise<UserDTO> {
     const dataUser = await this.userRepository.findOne({
       where: {
         username,
@@ -38,9 +50,9 @@ export class AuthService {
     if (dataUser) {
       const error: ErrorType = {
         field: 'username',
-        errors: ['The username is already exist !']
-      }
-      throw new RpcBadRequestException('',[error]);
+        errors: ['The username is already exist !'],
+      };
+      throw new RpcBadRequestException('', [error]);
     }
 
     const hashedPassword = await this.hashPassword(password);
@@ -49,7 +61,7 @@ export class AuthService {
       password: hashedPassword,
       email,
       DOB: convertStringToDate(DOB),
-      role: role || ROLE.USER
+      role: role || ROLE.USER,
     });
 
     const user = await this.userRepository.save(newUser);
@@ -72,14 +84,14 @@ export class AuthService {
       refreshToken: newRefreshToken,
     };
 
-    this.userRepository.update(data.id, {
+    this.userRepository.update(data.username, {
       ...token,
     });
 
     return token;
   }
 
-  verifyRefreshToken(token: string): any {
+  verifyRefreshToken(token: string): any{
     try {
       return jwt.verify(token, process.env.SECRET_KEY_REFRESH_TOKEN);
     } catch (err) {
@@ -93,7 +105,7 @@ export class AuthService {
     const user = await this.userRepository.findOne({
       where: {
         username: refreshData.username,
-        refreshToken
+        refreshToken,
       },
     });
 
@@ -101,7 +113,6 @@ export class AuthService {
       throw new RpcUnAuthorizeException('Refresh token is invalid !');
     }
 
-    
     const token = this.createToken(user);
     return {
       ...user,
@@ -133,10 +144,10 @@ export class AuthService {
     return bcrypt.hash(password, salt);
   }
 
-  async demoData(){
+  async demoData() {
     return await this.userRepository
-            .createQueryBuilder("user")
-            .leftJoinAndSelect("user.recipes", "recipe")
-            .getOne();
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.recipes', 'recipe')
+      .getOne();
   }
 }

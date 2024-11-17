@@ -8,6 +8,8 @@ import { env } from 'configs/env.config';
 import { AuthController } from './controllers/auth-service.controller';
 import { AuthService } from './services/auth-service.service';
 import { JwtModule } from '@nestjs/jwt';
+import { RecipesService } from './services/recipes-serice.service';
+import { RecipesController } from './controllers/recipes-service.controller';
 
 @Module({
   imports: [
@@ -32,13 +34,21 @@ import { JwtModule } from '@nestjs/jwt';
           port: env.APP.AUTH_SERVICE.PORT,
         },
       },
+      {
+        name: TCP_SERVICES_KEYS.RECIPES_SERVICE_KEY,
+        transport: Transport.TCP,
+        options: {
+          host: env.APP.RECIPES_SERVICE.HOST,
+          port: env.APP.RECIPES_SERVICE.PORT,
+        },
+      },
     ]),
     JwtModule.register({
       secret: env.APP.SECRET_KEY_ACCESS_TOKEN,
       signOptions: { expiresIn: '1h' },
     }),
   ],
-  controllers: [UserController, AuthController],
-  providers: [UserService, AuthService],
+  controllers: [UserController, AuthController, RecipesController],
+  providers: [UserService, AuthService, RecipesService],
 })
 export class AppModule {}

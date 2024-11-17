@@ -1,16 +1,22 @@
-import { HttpException, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { TCP_MESSAGES, TCP_SERVICES_KEYS, UserDTO } from 'lib';
 import { transformRequest } from 'src/utils/request.helper';
-import { TCP_MESSAGES, UserDTO, TCP_SERVICES_KEYS } from 'lib';
 
 @Injectable()
 export class UserService {
-  constructor(@Inject(TCP_SERVICES_KEYS.USER_SERVICE_KEY) private client: ClientProxy) {}
+  constructor(
+    @Inject(TCP_SERVICES_KEYS.USER_SERVICE_KEY) private client: ClientProxy,
+  ) {}
 
   async get(username: string) {
-    return transformRequest<UserDTO>(this.client,TCP_MESSAGES.USER_SERVICE.GET_USER,{
-		username
-	})
+    return transformRequest<UserDTO>(
+      this.client,
+      TCP_MESSAGES.USER_SERVICE.GET_USER,
+      {
+        username,
+      },
+    );
   }
 
   // save(

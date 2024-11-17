@@ -12,7 +12,7 @@ import { Recipes, Users } from 'lib';
       envFilePath: '.env',
     }),
     TypeOrmModule.forRootAsync(TypeOrmConFig),
-    TypeOrmModule.forFeature([Users,Recipes]),
+    TypeOrmModule.forFeature([Users]),
   ],
   controllers: [UserController],
   providers: [UserService],

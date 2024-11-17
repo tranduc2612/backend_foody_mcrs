@@ -34,11 +34,11 @@ export class AuthService {
         ...token,
       };
     }
-    const error: ErrorType = {
+    const errors: ErrorType = {
       field: 'username',
       errors: ['The username is not exist !'],
     };
-    throw new RpcBadRequestException('', [error]);
+    throw new RpcBadRequestException('', [errors]);
   }
 
   async registration({ username, password, email, DOB, role }: CreateUser): Promise<UserDTO> {

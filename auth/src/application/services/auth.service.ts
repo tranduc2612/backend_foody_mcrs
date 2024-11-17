@@ -34,8 +34,11 @@ export class AuthService {
         ...token,
       };
     }
-
-    throw new RpcBadRequestException('The username is not exist !');
+    const error: ErrorType = {
+      field: 'username',
+      errors: ['The username is not exist !'],
+    };
+    throw new RpcBadRequestException('', [error]);
   }
 
   async registration({ username, password, email, DOB, role }: CreateUser): Promise<UserDTO> {
@@ -81,7 +84,7 @@ export class AuthService {
       refreshToken: newRefreshToken,
     };
 
-    this.userRepository.update(data.id, {
+    this.userRepository.update(data.username, {
       ...token,
     });
 

@@ -51,7 +51,11 @@ export class UserService {
   private toUserDTO(user: Users): UserDTO {
     return {
       username: user.username,
-      email: user.email
+      email: user.email,
+      avatar: user.avatar,
+      role: user.role,
+      DOB: user.DOB,
+      createdAt: user.createdAt
     };
   }
 }

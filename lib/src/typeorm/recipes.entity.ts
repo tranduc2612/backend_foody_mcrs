@@ -45,6 +45,9 @@ export class Recipes {
   @Column()
   createdBy!: string;
 
+  @Column()
+  isDelete: boolean = false;
+
   @OneToMany(() => Step, (step) => step.id)
   @JoinColumn({ name: "idSteps", foreignKeyConstraintName: 'FK_Recipes_Step' })
   idSteps!: Step[];

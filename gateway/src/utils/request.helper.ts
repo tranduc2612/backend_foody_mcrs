@@ -16,12 +16,12 @@ export async function transformRequest<T>(
     const tcpResponse = await tcpService.send({ cmd: tcpKey }, param || {});
     const response = await firstValueFrom(tcpResponse);
     return response as T;
-  } catch (errors) {
-    const { statusCode, message, error } = errors;
+  } catch (error) {
+    const { statusCode, message, errors } = error;
     const response = {
       statusCode,
       message,
-      error,
+      errors,
     };
     throw new HttpException(response, statusCode);
   }

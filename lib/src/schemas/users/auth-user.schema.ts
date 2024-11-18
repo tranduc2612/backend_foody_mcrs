@@ -2,22 +2,22 @@ import { IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
 
 export class AuthUser{
   @IsString()
-  @IsNotEmpty({message: 'không được để trống !'})
+  @IsNotEmpty({message: 'The username is required'})
   @MinLength(3, {
-    message: "Tên tài khoản quá ngắn"
+    message: "The username is at least 3 character"
   })
   @MaxLength(20, {
-      message: "Tên tài khoản quá dài"
+      message: "The username must not exceed 20 characters"
   })
   username!: string;
 
   @IsString()
-  @IsNotEmpty({message: 'không được để trống !'})
+  @IsNotEmpty({message: 'The password is required'})
   @MinLength(3, {
-    message: "Tên mật khẩu quá ngắn"
+    message: "The password is at least 3 character"
   })
   @MaxLength(20, {
-      message: "Tên mật khẩu quá dài"
+      message: "The password must not exceed 20 characters"
   })
   password!: string;
 }

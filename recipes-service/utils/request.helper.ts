@@ -23,6 +23,7 @@ export async function transformRequest<T>(
       message,
       errors,
     };
+    
     throw new HttpException(response, statusCode);
   }
 }

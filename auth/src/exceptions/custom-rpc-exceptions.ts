@@ -12,7 +12,7 @@ export class RpcBadRequestException extends RpcException {
         statusCode: HttpStatus.BAD_REQUEST,
       }
       if(error){
-        res.error = error
+        res.errors = error
       }
       super(res);
     }

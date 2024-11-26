@@ -13,9 +13,9 @@ export class Order {
     @Column({ type: "timestamp", nullable: true })
     createdAt!: Date;
 
-    @ManyToOne(() => Users, (r) => r.orderIds)
-    @JoinColumn({ name: "idUsers", foreignKeyConstraintName: 'FK_Order_Users' })
-    idUser!: Users;
+    // @ManyToOne(() => Users, (r) => r.orderIds)
+    // @JoinColumn({ name: "idUsers", foreignKeyConstraintName: 'FK_Order_Users' })
+    // idUser!: Users;
 
     @OneToMany(() => OrderDetail, (r) => r.orderId)
     @JoinColumn({ name: "orderDetailId", foreignKeyConstraintName: 'FK_Order_Recipes' })

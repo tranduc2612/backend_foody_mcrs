@@ -13,13 +13,13 @@ export class CartDetail {
     @Column()
     total!: number;
 
-    @ManyToOne(() => Users, (rec) => rec.cart)
-    @JoinColumn({ name: "idUser", foreignKeyConstraintName: 'FK_CartDetail_User' })
-    idUser!: Users;
+    // @ManyToOne(() => Users, (rec) => rec.cart)
+    // @JoinColumn({ name: "idUser", foreignKeyConstraintName: 'FK_CartDetail_User' })
+    // idUser!: Users;
 
-    @ManyToOne(() => Merchandise, (rec) => rec.cart)
-    @JoinColumn({ name: "idMerchandise", foreignKeyConstraintName: 'FK_CartDetail_Merchandise' })
-    idMerchandise!: Merchandise;
+    // @ManyToOne(() => Merchandise, (rec) => rec.cart)
+    // @JoinColumn({ name: "idMerchandise", foreignKeyConstraintName: 'FK_CartDetail_Merchandise' })
+    // idMerchandise!: Merchandise;
 
     
 }

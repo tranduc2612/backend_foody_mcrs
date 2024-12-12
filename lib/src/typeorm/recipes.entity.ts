@@ -19,6 +19,9 @@ export class Recipes {
   description!: string;
 
   @Column()
+  rate!: number;
+
+  @Column()
   calories!: number;
 
   @Column()

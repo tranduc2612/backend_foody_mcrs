@@ -7,6 +7,7 @@ import { Season } from "./season.entity";
 import { RecipesType } from "./recipes-type.entity";
 import { Country } from "./country.entity";
 import { DetailRecipes } from "./detail-recipes.entity";
+import { RateDetail } from "./rate_detail.entity";
 @Entity({ name: "recipes" })
 export class Recipes {
   @PrimaryColumn()
@@ -17,10 +18,6 @@ export class Recipes {
 
   @Column({ type: "text" })
   description!: string;
-
-  @Column()
-  rate!: number;
-
   @Column()
   calories!: number;
 
@@ -70,6 +67,10 @@ export class Recipes {
   @ManyToOne(() => Country, (s) => s.idRescipes)
   @JoinColumn({ name: "idCountry", foreignKeyConstraintName: 'FK_Recipes_Country' })
   idCountry!: Country;
+
+  @OneToMany(() => RateDetail, (rateDetail) => rateDetail.id)
+  @JoinColumn({ name: "idRateDetails", foreignKeyConstraintName: 'FK_Recipes_RateDetail' })
+  rate!: RateDetail[];
 
   @OneToMany(() => DetailRecipes, (r) => r.idRescipes)
   @JoinColumn({ name: "idDetailRecipes", foreignKeyConstraintName: 'FK_Recipes_DetailRecipes' })

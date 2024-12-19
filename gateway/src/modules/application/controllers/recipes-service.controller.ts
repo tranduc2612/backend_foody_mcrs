@@ -24,7 +24,7 @@ export class RecipesController {
   constructor(private readonly recipesService: RecipesService) {}
 
   @Get('list')
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   getListRecipes(@Query() query: GetListRecipes) {
     return this.recipesService.getList(query);
   }

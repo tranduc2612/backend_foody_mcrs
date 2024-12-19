@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
   UseInterceptors
 } from '@nestjs/common';
@@ -24,8 +25,8 @@ export class RecipesController {
 
   @Get('list')
   @UseGuards(AuthGuard)
-  getListRecipes(@Body() req: GetListRecipes) {
-    return this.recipesService.getList(req);
+  getListRecipes(@Query() query: GetListRecipes) {
+    return this.recipesService.getList(query);
   }
 
   @Post('create')

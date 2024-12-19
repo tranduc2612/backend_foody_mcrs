@@ -49,7 +49,7 @@ export class RecipesService {
     });
 
     return {
-      recipes,
+      items: recipes,
       total
     };
 

@@ -23,7 +23,7 @@ import { AuthService } from './services/auth.service';
     ]),
     JwtModule.register({
       secret: env.APP.SECRET_KEY_ACCESS_TOKEN,
-      signOptions: { expiresIn: '1h' },
+      signOptions: { expiresIn: '12h' },
     }),
     PassportModule,
   ],

@@ -4,7 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConFig } from 'configs/mysqlDB.config';
 import { RecipesController } from './controllers/recipes.controller';
 import { RecipesService } from './services/recipes.service';
-import { CommentRecipes, Country, DetailRecipes, Merchandise, Recipes, RecipesType, Season, Step, TCP_SERVICES_KEYS, Users } from 'lib';
+import { CommentRecipes, Country, DetailRecipes, Merchandise, Recipes, RecipesType, Season, Step, TCP_SERVICES_KEYS, Users, RateDetail } from 'lib';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { env } from 'configs/env.config';
 
@@ -22,6 +22,7 @@ import { env } from 'configs/env.config';
       DetailRecipes,
       Merchandise,
       RecipesType,
+      RateDetail,
       Season,
     ]),
     ClientsModule.register([

@@ -1,6 +1,6 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
-import { CartDetail, CommentRecipes, Country, DetailRecipes, Merchandise, Order, OrderDetail, Recipes, RecipesType, Season, Step, Users } from 'lib';
+import { CommentRecipes, Country, DetailRecipes, Merchandise, RateDetail, Recipes, RecipesType, Season, Step } from 'lib';
 
 export const TypeOrmConFig: TypeOrmModuleAsyncOptions = {
   imports: [ConfigModule],
@@ -19,7 +19,8 @@ export const TypeOrmConFig: TypeOrmModuleAsyncOptions = {
       DetailRecipes,
       Merchandise,
       RecipesType,
-      Season
+      Season,
+      RateDetail
     ],
     synchronize: true,
   }),

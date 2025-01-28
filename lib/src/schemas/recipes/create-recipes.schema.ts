@@ -6,6 +6,9 @@ export class CreateRecipe {
   
     @IsString()
     description!: string;
+
+    @IsString()
+    imageTitle!: string;
   
     @IsNumber()
     calories!: number;

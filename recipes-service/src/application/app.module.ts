@@ -1,12 +1,16 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { TypeOrmConFig } from 'configs/mysqlDB.config';
-import { RecipesController } from './controllers/recipes.controller';
-import { RecipesService } from './services/recipes.service';
-import { CommentRecipes, Country, DetailRecipes, Merchandise, Recipes, RecipesType, Season, Step, TCP_SERVICES_KEYS, Users } from 'lib';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { env } from 'configs/env.config';
+import { TypeOrmConFig } from 'configs/mysqlDB.config';
+import { CommentRecipes, Country, DetailRecipes, Merchandise, Recipes, RecipesType, Season, Step, TCP_SERVICES_KEYS } from 'lib';
+import { CountryController } from './controllers/country.controller';
+import { RecipesController } from './controllers/recipes.controller';
+import { SeasonController } from './controllers/season.controller';
+import { CountryService } from './services/country.service';
+import { RecipesService } from './services/recipes.service';
+import { SeasonService } from './services/season.service';
 
 @Module({
   imports: [
@@ -35,7 +39,7 @@ import { env } from 'configs/env.config';
       },
     ]),
   ],
-  controllers: [RecipesController],
-  providers: [RecipesService],
+  controllers: [RecipesController,SeasonController,CountryController],
+  providers: [RecipesService,SeasonService,CountryService],
 })
 export class AppModule {}

@@ -16,9 +16,6 @@ export class RecipesService {
   ) {}
 
   async gets(req: GetListRecipes): Promise<any> {
-    // Bước 1: Lấy danh sách sản phẩm từ cơ sở dữ liệu
-    // const recipes = await this.recipesRepository.find();
-
     if(req.pageIndex <= 0){
       req.pageIndex = 1;
     }
@@ -26,6 +23,7 @@ export class RecipesService {
     if(req.pageCount <= 0){
       req.pageCount = 10;
     }
+    
 
     const [data, total] = await this.recipesRepository.findAndCount({
       where: {isDelete: false},
@@ -33,13 +31,10 @@ export class RecipesService {
       take: req.pageCount,
     })
 
-    // Bước 2: Lấy danh sách user ID liên quan từ danh sách sản phẩm
     const userIds = data.map((recipe) => recipe.createdBy);
 
-    // Bước 3: Gọi User Service để lấy thông tin user tương ứng
     const users = await transformRequest<UserDTO[]>(this.clientUser,TCP_MESSAGES.USER_SERVICE.GET_LIST_USER_BY_LIST_ID, userIds);
 
-    // Bước 4: Hợp nhất thông tin sản phẩm với thông tin người dùng
     const recipes = data.map((recipe: Recipes) => {
       const user = users.find((u) => u.username === recipe.createdBy);
       return {
@@ -53,22 +48,21 @@ export class RecipesService {
       total
     };
 
-    // throw new RpcBadRequestException('The username is not exist !');
   }
 
   async create(req: CreateRecipe): Promise<RecipesDTO> {
-    const newRecipe = this.recipesRepository.create({
-      ...req,
-      createdAt: new Date(), // Đặt ngày tạo là hiện tại
-    });
-
-    const newRecipeDTO: RecipesDTO = {
-      ...newRecipe
+    try {
+      const newRecipe = this.recipesRepository.create({
+        ...req,
+        createdAt: new Date(),
+      });
+      const data = await this.recipesRepository.save(newRecipe)
+      
+      return data
+    } catch (error) {
+      throw new RpcBadRequestException(error.sqlMessage);
     }
-
-    this.recipesRepository.save(newRecipe)
-
-    return newRecipeDTO
+    
   }
 
   async update(req: UpdateRecipe): Promise<boolean> {

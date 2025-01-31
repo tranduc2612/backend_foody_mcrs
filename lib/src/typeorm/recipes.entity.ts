@@ -22,7 +22,7 @@ export class Recipes {
   imageTitle!: string;
 
   @Column()
-  rate!: number;
+  rate: number = 0;
 
   @Column()
   calories!: number;

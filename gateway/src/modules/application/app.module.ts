@@ -10,6 +10,8 @@ import { AuthService } from './services/auth-service.service';
 import { JwtModule } from '@nestjs/jwt';
 import { RecipesService } from './services/recipes-serice.service';
 import { RecipesController } from './controllers/recipes-service.controller';
+import { CommonController } from './controllers/common-service.controller';
+import { CommonService } from './services/common-service.service';
 
 @Module({
   imports: [
@@ -48,7 +50,7 @@ import { RecipesController } from './controllers/recipes-service.controller';
       signOptions: { expiresIn: '1h' },
     }),
   ],
-  controllers: [UserController, AuthController, RecipesController],
-  providers: [UserService, AuthService, RecipesService],
+  controllers: [UserController, AuthController, RecipesController, CommonController],
+  providers: [UserService, AuthService, RecipesService, CommonService],
 })
 export class AppModule {}

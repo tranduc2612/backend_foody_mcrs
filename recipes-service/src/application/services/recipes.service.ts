@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RpcBadRequestException } from 'exceptions/custom-rpc-exceptions';
-import { CreateRecipe, GetListRecipes, Recipes, RecipesDTO, TCP_MESSAGES, TCP_SERVICES_KEYS, UpdateRecipe, UserDTO } from 'lib';
+import { CreateRecipe, GetListRecipes, Recipes, RecipesDTO, RecipesType, TCP_MESSAGES, TCP_SERVICES_KEYS, UpdateRecipe, UserDTO } from 'lib';
 import { firstValueFrom } from 'rxjs';
 import { Repository } from 'typeorm';
 import { transformRequest } from 'utils/request.helper';
@@ -12,10 +12,18 @@ export class RecipesService {
   constructor(
     @InjectRepository(Recipes)
     private readonly recipesRepository: Repository<Recipes>,
+    @InjectRepository(RecipesType)
+    private readonly recipesTypeRepository: Repository<RecipesType>,
     @Inject(TCP_SERVICES_KEYS.USER_SERVICE_KEY) private clientUser: ClientProxy,
   ) {}
 
   async gets(req: GetListRecipes): Promise<any> {
+    req.pageIndex = Number(req.pageIndex);
+    req.pageCount = Number(req.pageCount);
+    if(req.pageCount || req.pageIndex){
+      throw new RpcBadRequestException('page index or page count is invalid !');
+    }
+
     if(req.pageIndex <= 0){
       req.pageIndex = 1;
     }
@@ -50,10 +58,16 @@ export class RecipesService {
 
   }
 
+  async getRecipeTypes(): Promise<any> {
+    const recipeTypes = await this.recipesTypeRepository.find();
+    return recipeTypes;
+  }
+
   async create(req: CreateRecipe): Promise<RecipesDTO> {
     try {
       const newRecipe = this.recipesRepository.create({
         ...req,
+        imageTitle: '',
         createdAt: new Date(),
       });
       const data = await this.recipesRepository.save(newRecipe)
@@ -71,14 +85,11 @@ export class RecipesService {
   }
 
   async delete(payload): Promise<boolean> {
-    
     const find = await this.recipesRepository.findOne({where: payload});
-    console.log(find);
     if(find){
       await this.recipesRepository.update({id: find.id}, {isDelete: true});
       return true
     }
-
     throw new RpcBadRequestException('The recipes is not exist !');
 
   }

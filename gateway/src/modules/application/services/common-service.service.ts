@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { TCP_MESSAGES, TCP_SERVICES_KEYS, UserDTO } from 'lib';
+import { Country, Season, TCP_MESSAGES, TCP_SERVICES_KEYS, UserDTO } from 'lib';
 import { transformRequest } from 'src/utils/request.helper';
 
 @Injectable()
@@ -10,9 +10,18 @@ export class CommonService {
   ) {}
 
   async getCountries() {
-    return transformRequest<UserDTO>(
+    return transformRequest<Country>(
       this.client,
       TCP_MESSAGES.RECIPES_SERVICE.GET_LIST_COUNTRY,
+      {
+      },
+    );
+  }
+
+  async getSeasons() {
+    return transformRequest<Season>(
+      this.client,
+      TCP_MESSAGES.RECIPES_SERVICE.GET_LIST_SEASON,
       {
       },
     );

@@ -12,8 +12,8 @@ import {
 } from '@nestjs/common';
 import { CreateRecipe, GetListRecipes, UpdateRecipe } from 'lib';
 import { TransformInterceptor } from 'src/interceptors/transform.interceptor';
-import { RecipesService } from '../services/recipes-serice.service';
 import { AuthGuard } from 'src/modules/auth/auth.guard';
+import { RecipesService } from '../services/recipes-serice.service';
 
 // @UseGuards(AuthGuard)
 // @Controller('applications/cascade')
@@ -27,6 +27,12 @@ export class RecipesController {
   @UseGuards(AuthGuard)
   getListRecipes(@Query() req: GetListRecipes) {
     return this.recipesService.getList(req);
+  }
+
+  @Get('list-recipe-types')
+  @UseGuards(AuthGuard)
+  getListRecipeTypes() {
+    return this.recipesService.getListRecipeTypes();
   }
 
   @Post('create')

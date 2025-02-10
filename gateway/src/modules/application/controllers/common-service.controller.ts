@@ -21,4 +21,10 @@ export class CommonController {
   getListCountries() {
     return this.commonService.getCountries();
   }
+
+  @Get('list-season')
+  @UseGuards(AuthGuard)
+  getListSeasons() {
+    return this.commonService.getSeasons();
+  }
 }

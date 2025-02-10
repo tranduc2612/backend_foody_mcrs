@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Country, GetListRecipes } from 'lib';
+import { Country } from 'lib';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -13,9 +13,6 @@ export class CountryService {
   async gets(): Promise<any> {
     const countries = await this.respository.find();
 
-    return {
-        countries
-    };
-
+    return countries;
   }
 }

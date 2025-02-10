@@ -13,9 +13,7 @@ export class SeasonService {
   async gets(): Promise<any> {
     const seasons = await this.respository.find();
 
-    return {
-        seasons
-    };
+    return seasons;
 
   }
 }

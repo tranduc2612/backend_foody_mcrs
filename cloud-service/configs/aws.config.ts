@@ -4,10 +4,10 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 const s3 = new S3Client({
-  region: process.env.REACT_APP_AWS_REGION,
+  region: process.env.AWS_REGION,
   credentials: {
-    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY,
-    secretAccessKey: process.env.REACT_APP_AWS_SECRET_KEY,
+    accessKeyId: process.env.AWS_ACCESS_KEY,
+    secretAccessKey: process.env.AWS_SECRET_KEY,
   },
 });
 

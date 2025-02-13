@@ -27,6 +27,7 @@
   "dependencies": {
     "env": "^0.0.2",
     "jsonwebtoken": "^9.0.2",
-    "lib": "file:lib"
+    "lib": "file:lib",
+    "stream-to-string": "^1.2.1"
   }
 }

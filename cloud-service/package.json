@@ -28,7 +28,8 @@
     "env": "^0.0.2",
     "lib": "file:../lib",
     "reflect-metadata": "^0.2.0",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "stream-to-string": "^1.2.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",

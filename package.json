@@ -22,7 +22,7 @@
     "auth-dev": "cd auth && npm run start:dev",
     "user-dev": "cd user-service && npm run start:dev",
     "recipes-dev": "cd recipes-service && npm run start:dev",
-    "build-lib": "cd lib && npm run build"
+    "build-lib": "cd lib && npm run build-window"
   },
   "dependencies": {
     "env": "^0.0.2",

@@ -1,6 +1,6 @@
 import { GetObjectCommand, PutObjectAclCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { Injectable, Body } from '@nestjs/common';
-import s3 from 'configs/aws.config';
+import s3 from 'src/configs/aws.config';
 import { randomUUID } from 'crypto';
 import streamToString from 'stream-to-string';
 

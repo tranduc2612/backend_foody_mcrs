@@ -1,114 +1,139 @@
 version: "3.8"
 
 services:
-# lib
-  lib:
-    image: lib:latest
-    container_name: lib
+  auth-service:
     build:
-      context: ./lib
-      dockerfile: Dockerfile
-    command: npm run build
+      context: .
+      dockerfile: ./auth/Dockerfile
+    container_name: auth-service
+    ports:
+      - "3001:3001"
+    expose:
+      - '3001'
+    environment:
+      - DB_HOST=host.docker.internal
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=123456
+      - DB_NAME=foody_user
+      - AUTH_SERVICE_HOST=auth-service
+      - USER_SERVICE_HOST=user-service
+    depends_on:
+      - mysql
     networks:
-      - nestjs-network
+      - foody-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-# gateway
   gateway:
-    image: gateway:latest
-    container_name: gateway
     build:
-      context: ./gateway
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./gateway/Dockerfile
+    container_name: gateway
     ports:
       - "3000:3000"
+    expose:
+      - '3000'
     environment:
-      - NODE_ENV=development
+      - AUTH_SERVICE_HOST=auth-service
+      - RECIPES_SERVICE_HOST=recipes-service
+      - USER_SERVICE_HOST=user-service
     depends_on:
+      - auth-service
       - user-service
       - recipes-service
-      - auth-service
     networks:
-      - nestjs-network
+      - foody-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-# auth-service
-  auth-service:
-    image: auth-service:latest
-    container_name: auth-service
-    build:
-      context: ./auth
-      dockerfile: Dockerfile
-    ports:
-      - "3003:3003"
-    environment:
-      - NODE_ENV=development
-      - DATABASE_HOST=mysql
-      - DATABASE_PORT=3306
-      - DATABASE_USER=root
-      - DATABASE_PASSWORD=123456
-      - DATABASE_NAME=recipes_service_db
-    depends_on:
-      - mysql
-    networks:
-      - nestjs-network
-
-# user-service
   user-service:
-    image: user-service:latest
-    container_name: user-service
     build:
-      context: ./user-service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./user-service/Dockerfile
+    container_name: user-service
     ports:
       - "3002:3002"
+    expose:
+      - '3002'
     environment:
-      - NODE_ENV=development
-      - DATABASE_HOST=mysql
-      - DATABASE_PORT=3306
-      - DATABASE_USER=root
-      - DATABASE_PASSWORD=123456
-      - DATABASE_NAME=foody_user
-    depends_on:
-      - mysql
-    networks:
-      - nestjs-network
+      - DB_HOST=host.docker.internal
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=123456
+      - DB_NAME=foody_user
 
-# recipes-service
+      - USER_SERVICE_HOST=user-service
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - foody-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   recipes-service:
-    image: recipes-service:latest
-    container_name: recipes-service
     build:
-      context: ./recipes-service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./recipes-service/Dockerfile
+    container_name: recipes-service
     ports:
       - "3003:3003"
+    expose:
+      - '3003'
     environment:
-      - NODE_ENV=development
-      - DATABASE_HOST=mysql
-      - DATABASE_PORT=3306
-      - DATABASE_USER=root
-      - DATABASE_PASSWORD=123456
-      - DATABASE_NAME=foody_recipes
+      - DB_HOST=host.docker.internal
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=123456
+      - DB_NAME=foody_recipes
+
+      - AUTH_SERVICE_HOST=auth-service
+      - RECIPES_SERVICE_HOST=recipes-service
+      - USER_SERVICE_HOST=user-service
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     networks:
-      - nestjs-network
+      - foody-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   mysql:
-    image: mysql:8.0
+    image: mysql
     container_name: mysql
-    ports:
-      - "3306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=123456
+    ports:
+      - "3306:3306"
+    expose:
+      - '3306'
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./sql-scripts:/docker-entrypoint-initdb.d
     networks:
-      - nestjs-network
+      - foody-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 networks:
-  nestjs-network:
+  foody-network:
     driver: bridge
 
 volumes:
   mysql_data:
-    driver: local

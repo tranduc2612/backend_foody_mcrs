@@ -18,8 +18,11 @@ export class Recipes {
   @Column({ type: "text" })
   description!: string;
 
+  @Column({ type: "text" })
+  imageTitle!: string;
+
   @Column()
-  rate!: number;
+  rate: number = 0;
 
   @Column()
   calories!: number;

@@ -4,12 +4,14 @@ import { UserService } from './services/user-service.service';
 import { UserController } from './controllers/user-service.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { TCP_SERVICES_KEYS } from 'lib';
-import { env } from 'configs/env.config';
+import { env } from 'src/configs/env.config';
 import { AuthController } from './controllers/auth-service.controller';
 import { AuthService } from './services/auth-service.service';
 import { JwtModule } from '@nestjs/jwt';
 import { RecipesService } from './services/recipes-serice.service';
 import { RecipesController } from './controllers/recipes-service.controller';
+import { CommonController } from './controllers/common-service.controller';
+import { CommonService } from './services/common-service.service';
 
 @Module({
   imports: [
@@ -48,7 +50,7 @@ import { RecipesController } from './controllers/recipes-service.controller';
       signOptions: { expiresIn: '1h' },
     }),
   ],
-  controllers: [UserController, AuthController, RecipesController],
-  providers: [UserService, AuthService, RecipesService],
+  controllers: [UserController, AuthController, RecipesController, CommonController],
+  providers: [UserService, AuthService, RecipesService, CommonService],
 })
 export class AppModule {}

@@ -7,10 +7,12 @@
     "gateway",
     "user-service",
     "auth",
-    "recipes-service"
+    "recipes-service",
+    "storage-service"
   ],
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.7",
+    "@types/multer": "^1.4.12",
     "turbo": "^2.1.1"
   },
   "scripts": {
@@ -20,9 +22,12 @@
     "auth-dev": "cd auth && npm run start:dev",
     "user-dev": "cd user-service && npm run start:dev",
     "recipes-dev": "cd recipes-service && npm run start:dev",
-    "build-lib": "cd lib && npm run build"
+    "build-lib": "cd lib && npm run build-window"
   },
   "dependencies": {
-    "jsonwebtoken": "^9.0.2"
+    "env": "^0.0.2",
+    "jsonwebtoken": "^9.0.2",
+    "lib": "file:lib",
+    "stream-to-string": "^1.2.1"
   }
 }

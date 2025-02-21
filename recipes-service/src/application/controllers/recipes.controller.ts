@@ -16,6 +16,14 @@ export class RecipesController {
   }
 
   @MessagePattern(
+    { cmd: TCP_MESSAGES.RECIPES_SERVICE.GET_LIST_TYPE_RECIPES },
+    Transport.TCP,
+  )
+  getRecipeTypes() {
+    return this.recipesService.getRecipeTypes();
+  }
+
+  @MessagePattern(
     { cmd: TCP_MESSAGES.RECIPES_SERVICE.CREATE_RECIPES },
     Transport.TCP,
   )

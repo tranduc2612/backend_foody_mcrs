@@ -4,6 +4,7 @@ export interface RecipesDTO {
   id: string;
   title: string;
   description: string;
+  imageTitle: string;
   calories: number;
   sodium: number;
   fat: number;

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TypeOrmConFig } from 'configs/mysqlDB.config';
+import { TypeOrmConFig } from 'src/configs/mysqlDB.config';
 import { UserController } from './controllers/user.controller';
 import { UserService } from './services/user.service';
 import { Recipes, Users } from 'lib';

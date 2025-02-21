@@ -1,9 +1,12 @@
-import { IsNumber, IsString } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { IsNumber, IsOptional, IsString, Min } from 'class-validator';
 
 export class Pagnigation{
-  @IsNumber()
-  pageCount!: number;
+  @IsOptional()
+  @Transform(({ value }) => Number(value))
+  pageCount!: number | string;
 
-  @IsNumber()
-  pageIndex!: number;
+  @IsOptional()
+  @Transform(({ value }) => Number(value))
+  pageIndex!: number | string;
 }

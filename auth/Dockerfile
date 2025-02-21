@@ -1,23 +1,24 @@
-# Sử dụng hình ảnh Node.js chính thức
-FROM node:20-alpine
+FROM node:18
 
-# Thiết lập thư mục làm việc bên trong container
+# Set working directory
 WORKDIR /app
 
-# Copy package.json và package-lock.json để cài đặt dependency
-COPY package*.json ./
+# Copy toàn bộ code vào container
+COPY ./auth ./auth
 
-# Cài đặt các dependency
-RUN npm install --legacy-peer-deps
+# Copy `lib` vào container
+COPY ./lib ./lib
 
-# Copy toàn bộ mã nguồn vào container
-COPY . .
+# Cài đặt dependencies cho `lib`
+WORKDIR /app/lib
+RUN npm install && npm run build
 
-# Build ứng dụng NestJS
+# Cài đặt dependencies cho `auth`
+WORKDIR /app/auth
+RUN npm install
+
+# Build service code
 RUN npm run build
 
-# Expose cổng 3001 cho container
-EXPOSE 3001
-
-# Lệnh khởi chạy ứng dụng
+# Start the service
 CMD ["npm", "run", "start:prod"]

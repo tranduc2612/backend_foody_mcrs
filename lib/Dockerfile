@@ -1,19 +1,20 @@
-# Dockerfile mẫu cho các service
+# Sử dụng Node.js làm base image
 FROM node:18
 
+# Thiết lập thư mục làm việc
 WORKDIR /app
 
-# Sao chép thư viện lib vào container
-COPY ./lib ./lib
+# Sao chép package.json và package-lock.json vào container
+COPY package*.json ./
 
-# Sao chép mã nguồn service vào container
-COPY . .
-
-# Cài đặt thư viện lib
-RUN cd ./lib && npm install && npm run build
-
-# Cài đặt các dependencies cho service
+# Cài đặt dependencies
 RUN npm install
 
-# Start service
-CMD ["npm", "run", "start:dev"]
+# Sao chép toàn bộ mã nguồn vào container
+COPY . .
+
+# Build thư viện
+RUN npm run build
+
+# Lệnh mặc định (có thể không cần thiết nếu chỉ cần build)
+CMD ["npm", "run", "build"]

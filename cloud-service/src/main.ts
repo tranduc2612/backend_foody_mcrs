@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import { env } from 'configs/env.config';
+import { env } from 'src/configs/env.config';
 import { AwsModule } from './application/app.module';
 
 async function bootstrap() {

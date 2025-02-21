@@ -20,8 +20,9 @@ RUN npm install
 # Build service code
 RUN npm run build
 
-# Expose service port
-EXPOSE 3002
+# Script kiểm tra và kill process trên port 3002 (có thể thay đổi port)
+RUN apt-get update && apt-get install -y lsof
+RUN if lsof -i :3002 ; then kill -9 $(lsof -t -i :3002) ; fi
 
 # Start the service
-CMD ["npm", "run", "start:dev"]
+CMD ["npm", "run", "start:prod"]

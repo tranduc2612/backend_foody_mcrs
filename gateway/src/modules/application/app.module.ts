@@ -4,7 +4,7 @@ import { UserService } from './services/user-service.service';
 import { UserController } from './controllers/user-service.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { TCP_SERVICES_KEYS } from 'lib';
-import { env } from 'configs/env.config';
+import { env } from 'src/configs/env.config';
 import { AuthController } from './controllers/auth-service.controller';
 import { AuthService } from './services/auth-service.service';
 import { JwtModule } from '@nestjs/jwt';

@@ -1,7 +1,7 @@
 
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { RpcBadRequestException } from 'exceptions/custom-rpc-exceptions';
+import { RpcBadRequestException } from 'src/exceptions/custom-rpc-exceptions';
 import { CreateUser, UserDTO, Users } from 'lib';
 import { In, Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';

@@ -8,8 +8,8 @@ async function bootstrap() {
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.TCP,
     options: {
-      host: env.APP.AWS_SERVICE.HOST,
-      port: env.APP.AWS_SERVICE.PORT,
+      host: env.APP.GATEWAY.HOST,
+      port: env.APP.GATEWAY.PORT,
     },
   });
   // await app.startAllMicroservices();

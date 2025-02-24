@@ -1,39 +1,57 @@
 version: "3.8"
 
 services:
-  # auth-service:
-  #   build:
-  #     context: .
-  #     dockerfile: ./auth/Dockerfile
-  #   container_name: auth-service
-  #   ports:
-  #     - "3001:3001"
-  #   environment:
-  #     - DB_HOST=host.docker.internal
-  #     - DB_PORT=3306
-  #     - DB_USER=root
-  #     - DB_PASSWORD=123456
-  #     - DB_NAME=foody_user
-  #   depends_on:
-  #     - mysql
-  #   networks:
-  #     - foody-network
+  auth-service:
+    build:
+      context: .
+      dockerfile: ./auth/Dockerfile
+    container_name: auth-service
+    ports:
+      - "3001:3001"
+    expose:
+      - '3001'
+    environment:
+      - DB_HOST=host.docker.internal
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=123456
+      - DB_NAME=foody_user
+      - AUTH_SERVICE_HOST=auth-service
+      - USER_SERVICE_HOST=user-service
+    depends_on:
+      - mysql
+    networks:
+      - foody-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-  # gateway:
-  #   build:
-  #     context: .
-  #     dockerfile: ./gateway/Dockerfile
-  #   container_name: gateway
-  #   ports:
-  #     - "3000:3000"
-  #   environment:
-  #     - NODE_ENV=production
-  #   depends_on:
-  #     - auth-service
-  #     - user-service
-  #     - recipes-service
-  #   networks:
-  #     - foody-network
+  gateway:
+    build:
+      context: .
+      dockerfile: ./gateway/Dockerfile
+    container_name: gateway
+    ports:
+      - "3000:3000"
+    expose:
+      - '3000'
+    environment:
+      - AUTH_SERVICE_HOST=auth-service
+      - RECIPES_SERVICE_HOST=recipes-service
+      - USER_SERVICE_HOST=user-service
+    depends_on:
+      - auth-service
+      - user-service
+      - recipes-service
+    networks:
+      - foody-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   user-service:
     build:
@@ -42,17 +60,26 @@ services:
     container_name: user-service
     ports:
       - "3002:3002"
+    expose:
+      - '3002'
     environment:
       - DB_HOST=host.docker.internal
       - DB_PORT=3306
       - DB_USER=root
       - DB_PASSWORD=123456
       - DB_NAME=foody_user
+
+      - USER_SERVICE_HOST=user-service
     depends_on:
       mysql:
         condition: service_healthy
     networks:
       - foody-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   recipes-service:
     build:
@@ -61,17 +88,28 @@ services:
     container_name: recipes-service
     ports:
       - "3003:3003"
+    expose:
+      - '3003'
     environment:
       - DB_HOST=host.docker.internal
       - DB_PORT=3306
       - DB_USER=root
       - DB_PASSWORD=123456
       - DB_NAME=foody_recipes
+
+      - AUTH_SERVICE_HOST=auth-service
+      - RECIPES_SERVICE_HOST=recipes-service
+      - USER_SERVICE_HOST=user-service
     depends_on:
       mysql:
         condition: service_healthy
     networks:
       - foody-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   mysql:
     image: mysql
@@ -92,7 +130,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-
 
 networks:
   foody-network:

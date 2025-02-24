@@ -5,6 +5,7 @@ import {
 import { MessagePattern, Transport } from '@nestjs/microservices';
 import { AuthUser, CreateUser, TCP_MESSAGES } from 'lib';
 import { AuthService } from '../services/auth.service';
+import { env } from 'src/configs/env.config';
 @Controller()
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -22,6 +23,10 @@ export class AuthController {
     Transport.TCP,
   )
   register(@Body() payload: CreateUser) {
+    console.log(env.APP.GATEWAY.HOST);
+    console.log(env.APP.AUTH_SERVICE.HOST);
+    console.log(TCP_MESSAGES.AUTH_SERVICE.REGISTER_USER);
+    
     const { username, password } = payload;
     
     if (username && password) {

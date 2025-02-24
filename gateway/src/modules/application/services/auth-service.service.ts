@@ -7,6 +7,7 @@ import {
   UserDTO,
   CreateUser,
 } from 'lib';
+import { env } from 'src/configs/env.config';
 import { transformRequest } from 'src/utils/request.helper';
 
 @Injectable()
@@ -26,6 +27,10 @@ export class AuthService {
   }
 
   async register(payload: CreateUser) {
+    console.log(env.APP.GATEWAY.HOST);
+    console.log(env.APP.AUTH_SERVICE.HOST);
+    console.log(TCP_MESSAGES.AUTH_SERVICE.REGISTER_USER);
+    
     return transformRequest<UserDTO>(
       this.client,
       TCP_MESSAGES.AUTH_SERVICE.REGISTER_USER,

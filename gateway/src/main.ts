@@ -19,5 +19,24 @@ async function bootstrap() {
   }));
   await app.listen(env.APP.GATEWAY.PORT);
   console.log(`gateway listen port ${env.APP.GATEWAY.PORT} ...`) 
+
+  const gracefulShutdown = (): void => {
+    console.log('Shutting down gracefully...')
+    
+    app.close()
+    
+    // Force close the server after 5 seconds
+    setTimeout(() => {
+      console.error(
+        'Could not close connections in time, forcefully shutting down',
+      )
+        process.exit(1)
+      }, 5000)
+  }
+    
+  process.on('SIGTERM', gracefulShutdown)
+  process.on('SIGINT', gracefulShutdown)
 }
+
 bootstrap();
+

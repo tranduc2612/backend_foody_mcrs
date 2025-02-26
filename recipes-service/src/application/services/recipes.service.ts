@@ -17,43 +17,48 @@ export class RecipesService {
   ) {}
 
   async gets(req: GetListRecipes): Promise<any> {
-    req.pageIndex = Number(req.pageIndex);
-    req.pageCount = Number(req.pageCount);
-    if(req.pageCount || req.pageIndex){
-      throw new RpcBadRequestException('page index or page count is invalid !');
-    }
-
-    if(req.pageIndex <= 0){
-      req.pageIndex = 1;
-    }
-
-    if(req.pageCount <= 0){
-      req.pageCount = 10;
-    }
-    
-
-    const [data, total] = await this.recipesRepository.findAndCount({
-      where: {isDelete: false},
-      skip: (req.pageIndex - 1) * req.pageCount,
-      take: req.pageCount,
-    })
-
-    const userIds = data.map((recipe) => recipe.createdBy);
-
-    const users = await transformRequest<UserDTO[]>(this.clientUser,TCP_MESSAGES.USER_SERVICE.GET_LIST_USER_BY_LIST_ID, userIds);
-
-    const recipes = data.map((recipe: Recipes) => {
-      const user = users.find((u) => u.username === recipe.createdBy);
+    try {
+      
+      req.pageIndex = Number(req.pageIndex);
+      req.pageCount = Number(req.pageCount);
+      
+      if(!req.pageCount || !req.pageIndex){
+        throw new RpcBadRequestException('page index or page count is invalid !');
+      }
+  
+      if(req.pageIndex <= 0){
+        req.pageIndex = 1;
+      }
+  
+      if(req.pageCount <= 0){
+        req.pageCount = 10;
+      }
+  
+      const [data, total] = await this.recipesRepository.findAndCount({
+        where: {isDelete: false},
+        skip: (req.pageIndex - 1) * req.pageCount,
+        take: req.pageCount,
+      })
+  
+      const userIds = data.map((recipe) => recipe.createdBy);
+  
+      const users = await transformRequest<UserDTO[]>(this.clientUser,TCP_MESSAGES.USER_SERVICE.GET_LIST_USER_BY_LIST_ID, userIds);
+  
+      const recipes = data.map((recipe: Recipes) => {
+        const user = users.find((u) => u.username === recipe.createdBy);
+        return {
+          ...recipe,
+          user: user,
+        };
+      });
+  
       return {
-        ...recipe,
-        user: user,
+        recipes,
+        total
       };
-    });
-
-    return {
-      recipes,
-      total
-    };
+    } catch (error) {
+      throw new RpcBadRequestException(error);
+    }
 
   }
 

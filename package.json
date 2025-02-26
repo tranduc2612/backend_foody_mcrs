@@ -8,7 +8,7 @@
     "user-service",
     "auth",
     "recipes-service",
-    "storage-service"
+    "cloud-service"
   ],
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.7",

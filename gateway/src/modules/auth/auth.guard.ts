@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
-import { env } from 'configs/env.config';
+import { env } from 'src/configs/env.config';
 import { Request } from 'express';
 import { Role, ROLES_KEY } from '../../decorators/roles.decorator';
 

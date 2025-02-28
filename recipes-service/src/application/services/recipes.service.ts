@@ -71,7 +71,6 @@ export class RecipesService {
     try {
       const newRecipe = this.recipesRepository.create({
         ...req,
-        imageTitle: '',
         createdAt: new Date(),
       });
       const data = await this.recipesRepository.save(newRecipe)

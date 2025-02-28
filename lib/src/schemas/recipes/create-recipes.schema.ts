@@ -27,4 +27,7 @@ export class CreateRecipe {
 
     @IsString()
     createdBy!: string;
+
+    @IsString()
+    imageTitle!: string;
 }

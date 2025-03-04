@@ -4,6 +4,7 @@ import {
   CreateRecipe,
   GetListRecipes,
   RecipesDTO,
+  RecipesType,
   TCP_MESSAGES,
   TCP_SERVICES_KEYS,
   UpdateRecipe
@@ -22,6 +23,15 @@ export class RecipesService {
       TCP_MESSAGES.RECIPES_SERVICE.GET_LIST_RECIPES,
       {
         ...payload,
+      },
+    );
+  }
+
+  async getListRecipeTypes() {
+    return transformRequest<RecipesType>(
+      this.client,
+      TCP_MESSAGES.RECIPES_SERVICE.GET_LIST_TYPE_RECIPES,
+      {
       },
     );
   }

@@ -12,15 +12,19 @@ export const TCP_MESSAGES = {
   },
   RECIPES_SERVICE: {
     GET_LIST_RECIPES: "get-list-recipes",
+    GET_LIST_TYPE_RECIPES: "get-list-type-recipes",
+    GET_LIST_SEASON: "get-list-season",
+    GET_LIST_COUNTRY: "get-list-country",
     GET_RECIPES: "get-recipes",
     CREATE_RECIPES: "create-recipes",
     UPDATE_RECIPES: "update-recipes",
     DELETE_RECIPES: "delete-recipes"
-  }
+  },
 };
 
 export const TCP_SERVICES_KEYS = {
   AUTH_SERVICE_KEY: "AUTH_SERVICE_KEY",
   USER_SERVICE_KEY: "USER_SERVICE_KEY",
   RECIPES_SERVICE_KEY: "RECIPES_SERVICE_KEY",
+
 };

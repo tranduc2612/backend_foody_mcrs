@@ -8,8 +8,10 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "if exist dist rmdir /s /q dist",
-    "build": "npm run clean && tsc"
+    "clean": "rm -rf dist",
+    "build": "npm run clean && tsc",
+    "clean-window": "if exist dist rmdir /s /q dist",
+    "build-window": "npm run clean-window && tsc"
   },
   "author": "",
   "license": "ISC",
@@ -26,6 +28,7 @@
     "class-validator": "^0.14.1",
     "dayjs": "^1.11.13",
     "reflect-metadata": "^0.2.2",
-    "typeorm": "^0.3.20"
+    "typeorm": "^0.3.20",
+    "uuid": "^11.1.0"
   }
 }

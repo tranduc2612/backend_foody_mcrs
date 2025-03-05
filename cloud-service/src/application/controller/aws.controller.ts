@@ -17,3 +17,4 @@ export class AwsController {
     return this.awsService.getFile(key);
   }
 }
+``
